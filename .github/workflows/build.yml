@@ -26,5 +26,5 @@ jobs:
           SONAR_PROJECTKEY: ${{ steps.set-parameters.outputs.SONAR_PROJECTKEY }}
         with:
           args: >
-            "-Dsonar.projectKey=${SONAR_PROJECTKEY}"
+            "-Dsonar.projectKey=${{ env.SONAR_PROJECTKEY }}"
             -Dsonar.verbose=true
