@@ -1,5 +1,18 @@
 ---
 services:
+  sonarqube-mcp:
+    container_name: sonarqube-mcp
+    depends_on:
+      - sonarqube-ngrok
+    image: mcp/sonarqube:latest
+    environment:
+      SONARQUBE_TRANSPORT: http
+      SONARQUBE_HTTP_HOST: 0.0.0.0
+      SONARQUBE_TOKEN: ${SONAR_TOKEN}
+      SONARQUBE_URL: ${SONAR_HOST_URL}
+    ports:
+      - 8080:8080
+
   sonarqube:
     container_name: sonarqube
     image: sonarqube:2025.1.3-enterprise
