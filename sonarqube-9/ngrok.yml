@@ -6,4 +6,4 @@ endpoints:
   - name: sonarqube
     url: https://wayne-khan.ngrok.app
     upstream:
-      url: http://host.docker.internal:9000
+      url: http://host.docker.internal:19000
