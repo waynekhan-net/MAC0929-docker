@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
       - id: set-parameters
         run: |
-          echo "SONAR_PROJECTKEY=export-doc-sire-ppe-service" >> "$GITHUB_OUTPUT"
+          echo "SONAR_VERBOSE=true" >> "$GITHUB_OUTPUT"
       - name: sonarqube-scan-action
         uses: SonarSource/sonarqube-scan-action@v6
         env:
@@ -26,5 +26,4 @@ jobs:
           SONAR_PROJECTKEY: ${{ steps.set-parameters.outputs.SONAR_PROJECTKEY }}
         with:
           args: >
-            "-Dsonar.projectKey=${{ env.SONAR_PROJECTKEY }}"
-            -Dsonar.verbose=true
+            "-Dsonar.verbose=${{ env.SONAR_VERBOSE }}"
