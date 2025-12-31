@@ -1,18 +1,5 @@
 ---
 services:
-  sonarqube-9-mcp:
-    container_name: sonarqube-9-mcp
-    depends_on:
-      - sonarqube-9-ngrok
-    image: mcp/sonarqube:latest
-    environment:
-      SONARQUBE_HTTP_HOST: 0.0.0.0
-      SONARQUBE_TOKEN: ${SONAR_TOKEN}
-      SONARQUBE_TRANSPORT: http
-      SONARQUBE_URL: ${SONAR_HOST_URL}
-    ports:
-      - 8080:8080
-
   sonarqube-9:
     container_name: sonarqube-9
     depends_on:
