@@ -1,0 +1,56 @@
+---
+services:
+  sonarqube-2025-4-mcp:
+    container_name: sonarqube-2025-4-mcp
+    image: mcp/sonarqube:latest
+    environment:
+      SONARQUBE_HTTP_HOST: 0.0.0.0
+      SONARQUBE_TOKEN: ${SONAR_TOKEN}
+      SONARQUBE_TRANSPORT: http
+      SONARQUBE_URL: ${SONAR_HOST_URL}
+    ports:
+      - 8080:8080
+
+  sonarqube-2025-4:
+    container_name: sonarqube-2025-4
+    depends_on:
+      - sonarqube-2025-4-postgres
+    image: sonarqube:2025.4.4-enterprise
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://sonarqube-2025-4-postgres/sonarqube?currentSchema=public
+      - SONAR_JDBC_USERNAME=sonar
+    stop_grace_period: 3600s
+    ports:
+      - 19010:9000
+    volumes:
+      - ./conf:/opt/sonarqube/conf
+      - ./data:/opt/sonarqube/data
+      - ./extensions:/opt/sonarqube/extensions
+      - ./logs:/opt/sonarqube/logs
+
+  sonarqube-2025-4-postgres:
+    container_name: sonarqube-2025-4-postgres
+    image: postgres:17
+    environment:
+      - POSTGRES_DB=sonarqube
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=sonar
+    volumes:
+      - var-lib-postgresql-data:/var/lib/postgresql/data
+
+  sonarqube-2025-4-vmagent:
+    container_name: sonarqube-2025-4-vmagent
+    depends_on:
+      - sonarqube-2025-4
+    image: victoriametrics/vmagent:v1.93.15
+    command:
+      - "--promscrape.config=/etc/prometheus/prometheus.yml"
+      - "--remoteWrite.url=http://host.docker.internal:8428/api/v1/write"
+    volumes:
+      - ./vmagent.yaml:/etc/prometheus/prometheus.yml
+      - vmagentdata:/vmagentdata
+
+volumes:
+  var-lib-postgresql-data:
+  vmagentdata:

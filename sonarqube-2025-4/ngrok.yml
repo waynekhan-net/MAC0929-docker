@@ -1,0 +1,9 @@
+version: 3
+agent:
+  connect_url: tunnel.ngrok.com:443
+
+endpoints:
+  - name: sonarqube
+    url: https://wayne-khan.ngrok.app
+    upstream:
+      url: http://host.docker.internal:19000
