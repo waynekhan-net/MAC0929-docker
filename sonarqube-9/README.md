@@ -1,4 +1,4 @@
-# sonarqube-9 
+# sonarqube-9
 
 ```text
 export POSTGRES_PASSWORD=  # FIXME: Set a non-empty password, lest Postgres not work
