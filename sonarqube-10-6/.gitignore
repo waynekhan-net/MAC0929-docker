@@ -1,0 +1,5 @@
+ca.*
+data/*
+extensions/plugins/*.*
+logs/*.log
+server.*
