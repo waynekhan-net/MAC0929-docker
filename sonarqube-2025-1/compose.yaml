@@ -19,7 +19,7 @@ services:
     container_name: sonarqube-2025-1
     depends_on:
       - sonarqube-2025-1-postgres
-    image: sonarqube:2025.1.5-enterprise
+    image: sonarqube:2025.1.6-enterprise
     environment:
       - SONAR_JDBC_URL=jdbc:postgresql://sonarqube-2025-1-postgres/sonarqube?currentSchema=public
       - SONAR_JDBC_USERNAME=sonar
